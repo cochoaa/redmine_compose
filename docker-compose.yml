@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+  redmine:
+    container_name: redmine_app
+    image: redmine:4.2.4
+    env_file:
+      - redmine.env
+    restart: always
+    ports:
+      - 8080:3000
+    volumes:
+      - ./files:/usr/src/redmine/files
+  db:
+    container_name: redmine_db
+    restart: always
+    build: './postgres96pe'
+    env_file:
+      - database.env
+    ports:
+      - '50000:5432'
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+volumes:
+  pg-data:
